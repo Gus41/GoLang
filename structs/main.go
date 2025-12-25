@@ -5,6 +5,12 @@ import (
 	"structsProject/user"
 )
 
+type CustomString string
+
+func (s CustomString) Log() {
+	fmt.Println(s)
+}
+
 func main() {
 
 	firstName := getUserData("First name ")
@@ -21,6 +27,10 @@ func main() {
 	appUser.OutputUserDetails()
 	appUser.ClearUserName()
 	appUser.OutputUserDetails()
+
+	var test CustomString = "test"
+
+	test.Log()
 
 }
 
