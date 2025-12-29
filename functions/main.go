@@ -1,18 +1,29 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	outputText("Hello world")
-	value := fmt.Sprint(calculate(1, 1))
-	outputText(value)
+	numbers := []int{1, 2, 3, 4}
+
+	dbNumbers := transformNumbers(&numbers, multiplyBy(2))
+
+	fmt.Println("Original:", numbers)
+	fmt.Println("Dobrados:", dbNumbers)
 }
 
-func outputText(text string) {
-	fmt.Println(text)
+type transformFunction func(int) int
+
+func multiplyBy(num int) transformFunction {
+	return func(value int) int {
+		return num * value
+	}
 }
-func calculate(a int, b int) int {
-	return a + b
+
+func transformNumbers(numbers *[]int, transform transformFunction) []int {
+	dbNumbers := make([]int, len(*numbers))
+	for i, val := range *numbers {
+		dbNumbers[i] = transform(val)
+	}
+
+	return dbNumbers
 }
