@@ -1,0 +1,46 @@
+package routes
+
+import (
+	"api/models"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+func signup(context *gin.Context) {
+	var user models.User
+
+	err := context.ShouldBindJSON(&user)
+
+	if err != nil {
+		context.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"Message": "Could not parse data",
+			},
+		)
+
+		return
+	}
+
+	err = user.Save()
+
+	if err != nil {
+		context.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				"Message": "Could not save user",
+			},
+		)
+
+		return
+	}
+
+	context.JSON(
+		http.StatusCreated,
+		gin.H{
+			"Message": "User Created",
+			"user":    user,
+		},
+	)
+}
