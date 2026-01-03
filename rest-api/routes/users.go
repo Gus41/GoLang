@@ -40,7 +40,6 @@ func signup(context *gin.Context) {
 		http.StatusCreated,
 		gin.H{
 			"Message": "User Created",
-			"user":    user,
 		},
 	)
 }
